@@ -1,10 +1,10 @@
 package Task3;
 
 public interface MyQueue<T> {
-    void add(T value);
+    boolean add(T value);
     T remove() throws Exception;
     T element() throws Exception;
-    int count();
+    int size();
     boolean isEmpty();
     void reverse() throws Exception;
 }

@@ -38,10 +38,13 @@ class MyLinkedListTest {
         }
 
         MyLinkedList<Double> list = new MyLinkedList(objArr);
+
         list.bubbleSort(Comparator.comparingDouble(a -> (double) a));
+
         System.out.printf("%-10s %s\n", "Input:", Arrays.toString(arr));
         System.out.printf("%-10s %s\n", "Expected:", Arrays.toString(sortedArr));
         System.out.printf("%-10s %s\n", "Output:", Arrays.toString(list.toArray()));
+
         if (Arrays.deepEquals(list.toArray(), objSortedArr)) {
             System.out.println("PASSED");
         } else {

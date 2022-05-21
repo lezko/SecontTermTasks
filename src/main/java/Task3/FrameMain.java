@@ -1,5 +1,6 @@
 package Task3;
 
+import util.ArrayUtils;
 import util.JTableUtils;
 import util.SwingUtils;
 
@@ -19,11 +20,8 @@ public class FrameMain extends JFrame {
     private JPanel panelMain;
     private JTable tableInput;
     private JButton buttonSaveInputIntoFile;
-    private JButton buttonAddToQueue;
-    private JTextField textInput;
-    private JButton buttonDeleteFromQueue;
-    private JButton buttonReverse;
-    private Queue<String> q;
+    private JButton buttonReverseMyQueue;
+    private JButton buttonReverseStandardQueue;
     private List<String> list;
 
     private JFileChooser fileChooserOpen;
@@ -40,9 +38,7 @@ public class FrameMain extends JFrame {
         this.setVisible(true);
         this.pack();
 
-        q = new LinkedList<>();
-
-        JTableUtils.initJTableForArray(tableInput, 70, false, false, false, false);
+        JTableUtils.initJTableForArray(tableInput, 70, false, false, false, true);
         //tableOutput.setEnabled(false);
         tableInput.setRowHeight(25);
 
@@ -70,50 +66,19 @@ public class FrameMain extends JFrame {
 
         this.pack();
 
-        buttonAddToQueue.addActionListener(actionEvent -> {
+        buttonReverseMyQueue.addActionListener(actionEvent -> {
             try {
-                String elem = textInput.getText();
-                if (Objects.equals(elem, "")) {
-                    return;
-                }
-                q.add(elem);
-                list = (List<String>) q;
-                String[] strArr = new String[q.size()];
-                for (int i = 0; i < q.size(); i++) {
-                    strArr[i] = list.get(q.size() - i - 1);
-                }
-                JTableUtils.writeArrayToJTable(tableInput, strArr);
-                textInput.setText("");
+                MyQueue<String> q = new MyLinkedListQueue<>();
+                reverseQueue(q);
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }
         });
 
-        buttonDeleteFromQueue.addActionListener(actionEvent -> {
+        buttonReverseStandardQueue.addActionListener(actionEvent -> {
             try {
-                q.poll();
-                list = (List<String>) q;
-                String[] strArr = new String[q.size()];
-                for (int i = 0; i < q.size(); i++) {
-                    strArr[i] = list.get(q.size() - i - 1);
-                }
-                JTableUtils.writeArrayToJTable(tableInput, strArr);
-                textInput.setText("");
-            } catch (Exception e) {
-                SwingUtils.showErrorMessageBox(e);
-            }
-        });
-
-        buttonReverse.addActionListener(actionEvent -> {
-            try {
-                q = Task.reverse(q);
-                list = (List<String>) q;
-                String[] strArr = new String[q.size()];
-                for (int i = 0; i < q.size(); i++) {
-                    strArr[i] = list.get(q.size() - i - 1);
-                }
-                JTableUtils.writeArrayToJTable(tableInput, strArr);
-                textInput.setText("");
+                MyQueue<String> q = new ReverseQueue<>();
+                reverseQueue(q);
             } catch (Exception e) {
                 SwingUtils.showErrorMessageBox(e);
             }
@@ -128,9 +93,8 @@ public class FrameMain extends JFrame {
                         file += ".txt";
                     }
                     PrintWriter out = new PrintWriter(file);
-                    list = (List<String>) q;
-                    for (int i = 0; i < list.size(); i++) {
-                        out.print(list.get(list.size() - i - 1) + " ");
+                    for (int i = 0; i < array.length; i++) {
+                        out.print(array[i] + " ");
                     }
                     out.close();
                 }
@@ -138,5 +102,18 @@ public class FrameMain extends JFrame {
                 SwingUtils.showErrorMessageBox(e);
             }
         });
+    }
+
+    private void reverseQueue(MyQueue<String> q) throws Exception {
+        String[] strArr = JTableUtils.readStringArrayFromJTable(tableInput);
+        for (String str: strArr) {
+            q.add(str);
+        }
+        q.reverse();
+        for (int i = 0; i < strArr.length; i++) {
+            strArr[i] = q.remove();
+        }
+
+        JTableUtils.writeArrayToJTable(tableInput, strArr);
     }
 }

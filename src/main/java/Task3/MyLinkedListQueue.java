@@ -2,11 +2,7 @@ package Task3;
 
 public class MyLinkedListQueue<T> extends MyLinkedList<T> implements MyQueue<T> {
     public void reverse() throws Exception {
-        if (count() == 2) {
-            T headValue = getFirst();
-            removeFirst();
-            add(headValue);
-        } else {
+        if (!isEmpty()) {
             T first = remove();
             reverse();
             add(first);
@@ -14,8 +10,9 @@ public class MyLinkedListQueue<T> extends MyLinkedList<T> implements MyQueue<T> 
     }
 
     @Override
-    public void add(T value) {
+    public boolean add(T value) {
         addLast(value);
+        return true;
     }
 
     @Override
@@ -34,12 +31,7 @@ public class MyLinkedListQueue<T> extends MyLinkedList<T> implements MyQueue<T> 
     }
 
     @Override
-    public int count() {
-        return size();
-    }
-
-    @Override
     public boolean isEmpty() {
-        return count() == 0;
+        return size() == 0;
     }
 }

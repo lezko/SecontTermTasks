@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TaskTest {
     static Stream<Arguments> reverseTestProvider() throws Exception {
-        Queue<String> q = new LinkedList<>();
+        ReverseQueue<String> q = new ReverseQueue<>();
 
         q.add("one");
         q.add("two");
         q.add("three");
         q.add("four");
         q.add("five");
-        q = Task.reverse(q);
+        q.reverse();
         return Stream.of(
                 Arguments.arguments("five", q.peek()),
                 Arguments.arguments("five", q.poll()),

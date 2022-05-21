@@ -1,7 +1,6 @@
 package Task3;
 
-import Task3.MyLinkedListQueue;
-import Task3.MyQueue;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,10 +18,10 @@ class MyLinkedListQueueTest {
         q.add("four");
         q.add("five");
         return Stream.of(
-                Arguments.arguments("one", q.element()),
-                Arguments.arguments("one", q.remove()),
-                Arguments.arguments("two", q.remove()),
-                Arguments.arguments("three", q.remove())
+            Arguments.arguments("one", q.element()),
+            Arguments.arguments("one", q.remove()),
+            Arguments.arguments("two", q.remove()),
+            Arguments.arguments("three", q.remove())
         );
     }
 
@@ -31,7 +30,6 @@ class MyLinkedListQueueTest {
     void queueTest(String expected, String actual) {
         assertEquals(expected, actual);
     }
-
 
 
 
